@@ -16,8 +16,8 @@ final polylineProvider = StateNotifierProvider.family
   return PolylineNotifier(
     PolylineResultState(
       bounds: LatLngBounds(
-        southwest: LatLng(0.0, 0.0),
-        northeast: LatLng(0.0, 0.0),
+        southwest: const LatLng(0.0, 0.0),
+        northeast: const LatLng(0.0, 0.0),
       ),
       distance: '',
       duration: '',
@@ -44,15 +44,15 @@ class PolylineNotifier extends StateNotifier<PolylineResultState> {
         if (routes.isNotEmpty) {
           final data = decoded['routes'][0];
 
-          final _sw = data['bounds']['southwest'];
+          final sw = data['bounds']['southwest'];
           final southwest = LatLng(
-            double.parse(_sw['lat'].toString()),
-            double.parse(_sw['lng'].toString()),
+            double.parse(sw['lat'].toString()),
+            double.parse(sw['lng'].toString()),
           );
-          final _ne = data['bounds']['northeast'];
+          final ne = data['bounds']['northeast'];
           final northeast = LatLng(
-            double.parse(_ne['lat'].toString()),
-            double.parse(_ne['lng'].toString()),
+            double.parse(ne['lat'].toString()),
+            double.parse(ne['lng'].toString()),
           );
           LatLngBounds bounds =
               LatLngBounds(southwest: southwest, northeast: northeast);

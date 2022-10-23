@@ -1,68 +1,43 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:temple/state/app_value_state.dart';
 
 //////////////////////////////////////////////////////
 
-final drawnOpenProvider =
-    StateNotifierProvider.autoDispose<DrawnOpenStateNotifier, int>((ref) {
-  return DrawnOpenStateNotifier();
+final appValueProvider =
+    StateNotifierProvider.autoDispose<AppValueStateNotifier, AppValueState>(
+        (ref) {
+  return AppValueStateNotifier(
+    const AppValueState(
+      isDrawnOpen: false,
+      isDefaultmap: false,
+      isPolylineDisp: false,
+      isLargeMap: false,
+      isZenpukuji: false,
+    ),
+  );
 });
 
-class DrawnOpenStateNotifier extends StateNotifier<int> {
-  DrawnOpenStateNotifier() : super(0);
+class AppValueStateNotifier extends StateNotifier<AppValueState> {
+  AppValueStateNotifier(super.state);
 
-  Future<void> setValue({required int value}) async {
-    state = value;
+  Future<void> setDrawnOpen({required bool value}) async {
+    state = state.copyWith(isDrawnOpen: value);
   }
-}
 
-//////////////////////////////////////////////////////
-
-//////////////////////////////////////////////////////
-
-final mapTypeProvider =
-    StateNotifierProvider.autoDispose<MapTypeStateNotifier, int>((ref) {
-  return MapTypeStateNotifier();
-});
-
-class MapTypeStateNotifier extends StateNotifier<int> {
-  MapTypeStateNotifier() : super(0);
-
-  Future<void> setValue({required int value}) async {
-    state = value;
+  Future<void> setMapType({required bool value}) async {
+    state = state.copyWith(isDefaultmap: value);
   }
-}
 
-//////////////////////////////////////////////////////
-
-//////////////////////////////////////////////////////
-
-final dispPolylineProvider =
-    StateNotifierProvider.autoDispose<DispPolylineStateNotifier, int>((ref) {
-  return DispPolylineStateNotifier();
-});
-
-class DispPolylineStateNotifier extends StateNotifier<int> {
-  DispPolylineStateNotifier() : super(0);
-
-  Future<void> setValue({required int value}) async {
-    state = value;
+  Future<void> setDispPolyline({required bool value}) async {
+    state = state.copyWith(isPolylineDisp: value);
   }
-}
 
-//////////////////////////////////////////////////////
+  Future<void> setEnlarge({required bool value}) async {
+    state = state.copyWith(isLargeMap: value);
+  }
 
-//////////////////////////////////////////////////////
-
-final enlargeProvider =
-    StateNotifierProvider.autoDispose<EnlargeStateNotifier, int>((ref) {
-  return EnlargeStateNotifier();
-});
-
-class EnlargeStateNotifier extends StateNotifier<int> {
-  EnlargeStateNotifier() : super(0);
-
-  Future<void> setValue({required int value}) async {
-    state = value;
+  Future<void> setZenpukuji({required bool value}) async {
+    state = state.copyWith(isZenpukuji: value);
   }
 }
 

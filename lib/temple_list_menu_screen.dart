@@ -50,7 +50,7 @@ class TempleListMenuScreen extends ConsumerWidget {
       list.add(
         GestureDetector(
           onTap: () {
-            _ref.watch(drawnOpenProvider.notifier).setValue(value: 0);
+            _ref.watch(appValueProvider.notifier).setDrawnOpen(value: false);
 
             Navigator.pushReplacement(
               _context,

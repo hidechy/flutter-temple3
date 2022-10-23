@@ -16,8 +16,6 @@ class TempleDetailDisplayScreen extends ConsumerWidget {
 
   TempleDetailDisplayScreen({Key? key, required this.temple}) : super(key: key);
 
-  String origin = '35.7102009,139.9490672';
-
   late CameraPosition initialCameraPosition;
 
   late LatLng latLng;
@@ -28,24 +26,28 @@ class TempleDetailDisplayScreen extends ConsumerWidget {
 
   late WidgetRef _ref;
 
+  String funabashi = '35.7102009,139.9490672';
+  String zenpukuji = '35.7185071,139.5869534';
+
   ///
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     _ref = ref;
 
-    final mapTypeState = ref.watch(mapTypeProvider);
+    final appValueState = ref.watch(appValueProvider);
 
     final polylineState = ref.watch(polylineProvider(
       PolylineParamState(
-        origin: origin,
+        origin: (appValueState.isZenpukuji) ? zenpukuji : funabashi,
         destination: '${temple.lat},${temple.lng}',
         apikey: 'AIzaSyD9PkTM1Pur3YzmO-v4VzS0r8ZZ0jRJTIU',
       ),
     ));
 
-    final dispPolylineState = ref.watch(dispPolylineProvider);
-
-    final enlargeState = ref.watch(enlargeProvider);
+    var dist = [polylineState.distance];
+    (appValueState.isZenpukuji)
+        ? dist.add('（from 善福寺）')
+        : dist.add('（from 船橋）');
 
     final date = temple.date.toString().split(' ')[0];
 
@@ -72,8 +74,19 @@ class TempleDetailDisplayScreen extends ConsumerWidget {
               ),
             ],
           ),
-          Text(temple.temple),
-          if (temple.memo != '') Text('with.${temple.memo}'),
+
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(temple.temple),
+              Text(temple.gohonzon),
+              if (temple.memo != '')
+                Text(
+                  'with.${temple.memo}',
+                  style: TextStyle(color: Colors.grey),
+                ),
+            ],
+          ),
 
           Container(
             height: 5,
@@ -83,14 +96,16 @@ class TempleDetailDisplayScreen extends ConsumerWidget {
 
           //------------------------------// Map
           SizedBox(
-            height: (enlargeState == 1) ? (size.height - 350) : 220,
+            height: (appValueState.isLargeMap) ? (size.height - 350) : 220,
             child: GoogleMap(
-              mapType: (mapTypeState == 1) ? MapType.satellite : MapType.normal,
+              mapType: (appValueState.isDefaultmap)
+                  ? MapType.satellite
+                  : MapType.normal,
               onMapCreated: (controller) => googleMapController = controller,
               markers: markers,
               initialCameraPosition: initialCameraPosition,
               polylines: {
-                if (dispPolylineState == 1)
+                if (appValueState.isPolylineDisp)
                   Polyline(
                     polylineId: const PolylineId('overview_polyline'),
                     color: Colors.redAccent,
@@ -104,14 +119,14 @@ class TempleDetailDisplayScreen extends ConsumerWidget {
           ),
           //------------------------------// Map
 
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
 
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(temple.address),
               Text(temple.station),
-              Text(polylineState.distance),
+              Text((polylineState.distance != '') ? dist.join() : '-'),
             ],
           ),
 
@@ -129,19 +144,15 @@ class TempleDetailDisplayScreen extends ConsumerWidget {
 
   ///
   Widget makeButtonLine() {
-    final mapTypeState = _ref.watch(mapTypeProvider);
-
-    final dispPolylineState = _ref.watch(dispPolylineProvider);
-
-    final enlargeState = _ref.watch(enlargeProvider);
+    final appValueState = _ref.watch(appValueProvider);
 
     return Row(
       children: [
         IconButton(
           onPressed: () {
             _ref
-                .watch(enlargeProvider.notifier)
-                .setValue(value: (enlargeState == 0) ? 1 : 0);
+                .watch(appValueProvider.notifier)
+                .setEnlarge(value: (appValueState.isLargeMap) ? false : true);
 
             backFlagPosition();
           },
@@ -150,22 +161,28 @@ class TempleDetailDisplayScreen extends ConsumerWidget {
         IconButton(
           onPressed: () {
             _ref
-                .watch(mapTypeProvider.notifier)
-                .setValue(value: (mapTypeState == 0) ? 1 : 0);
+                .watch(appValueProvider.notifier)
+                .setMapType(value: (appValueState.isDefaultmap) ? false : true);
           },
           icon: const Icon(Icons.square_foot_outlined, color: Colors.red),
         ),
         IconButton(
           onPressed: () {
-            _ref
-                .watch(dispPolylineProvider.notifier)
-                .setValue(value: (dispPolylineState == 0) ? 1 : 0);
+            _ref.watch(appValueProvider.notifier).setDispPolyline(
+                value: (appValueState.isPolylineDisp) ? false : true);
           },
           icon: const Icon(Icons.stacked_line_chart, color: Colors.red),
         ),
         IconButton(
           onPressed: () => backFlagPosition(),
-          icon: Icon(Icons.flag, color: Colors.red),
+          icon: const Icon(Icons.flag, color: Colors.red),
+        ),
+        IconButton(
+          onPressed: () {
+            _ref.watch(appValueProvider.notifier).setZenpukuji(
+                value: (appValueState.isZenpukuji) ? false : true);
+          },
+          icon: const Icon(Icons.home_filled, color: Colors.red),
         ),
       ],
     );
@@ -175,7 +192,11 @@ class TempleDetailDisplayScreen extends ConsumerWidget {
   void setMapParam() {
     final templeLatLngState = _ref.watch(templeLatLngProvider);
 
-    final exOrigin = origin.split(',');
+    final appValueState = _ref.watch(appValueProvider);
+
+    final exOrigin = (appValueState.isZenpukuji)
+        ? zenpukuji.split(',')
+        : funabashi.split(',');
 
     markers.add(
       Marker(
@@ -228,7 +249,9 @@ class TempleDetailDisplayScreen extends ConsumerWidget {
   ///
   void backFlagPosition() {
     googleMapController.animateCamera(
-      CameraUpdate.newCameraPosition(initialCameraPosition),
+      CameraUpdate.newCameraPosition(
+        initialCameraPosition,
+      ),
     );
   }
 }

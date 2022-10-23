@@ -26,7 +26,7 @@ class TempleListContentsScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final templeAllState = ref.watch(templeAllProvider(year));
 
-    final drawnOpenState = ref.watch(drawnOpenProvider);
+    final appValueState = ref.watch(appValueProvider);
 
     final size = MediaQuery.of(context).size;
 
@@ -36,7 +36,7 @@ class TempleListContentsScreen extends ConsumerWidget {
         xOffset,
         yOffset,
         0,
-      )..rotateZ(drawnOpenState == 1 ? (pi / 60) : 0),
+      )..rotateZ((appValueState.isDrawnOpen) ? (pi / 60) : 0),
       curve: Curves.elasticIn,
       decoration: const BoxDecoration(color: Colors.black),
       child: Scaffold(
@@ -48,14 +48,18 @@ class TempleListContentsScreen extends ConsumerWidget {
             alignment: Alignment.topLeft,
             child: GestureDetector(
               onTap: () {
-                if (drawnOpenState == 1) {
+                if (appValueState.isDrawnOpen) {
                   xOffset = 0;
                   yOffset = 0;
-                  ref.watch(drawnOpenProvider.notifier).setValue(value: 0);
+                  ref
+                      .watch(appValueProvider.notifier)
+                      .setDrawnOpen(value: false);
                 } else {
                   xOffset = size.width - 200;
                   yOffset = size.height / 10;
-                  ref.watch(drawnOpenProvider.notifier).setValue(value: 1);
+                  ref
+                      .watch(appValueProvider.notifier)
+                      .setDrawnOpen(value: true);
                 }
               },
               child: AnimatedSwitcher(
@@ -63,7 +67,7 @@ class TempleListContentsScreen extends ConsumerWidget {
                 switchInCurve: Curves.easeInOutBack,
                 transitionBuilder: (child, animation) =>
                     ScaleTransition(scale: animation, child: child),
-                child: (drawnOpenState == 1)
+                child: (appValueState.isDrawnOpen)
                     ? const Icon(Icons.arrow_back,
                         size: 40, key: ValueKey('close'))
                     : const Icon(Icons.arrow_forward,

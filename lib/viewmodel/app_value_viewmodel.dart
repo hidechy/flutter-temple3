@@ -1,5 +1,6 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:temple/state/app_value_state.dart';
+
+import '../state/app_value_state.dart';
 
 //////////////////////////////////////////////////////
 

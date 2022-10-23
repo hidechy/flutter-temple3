@@ -3,13 +3,15 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:temple/state/polyline_param_state.dart';
 
 import '../layouts/default_layout.dart';
 import '../models/temple.dart';
 import '../viewmodel/app_value_viewmodel.dart';
 import '../viewmodel/polyline_viewmodel.dart';
 import '../viewmodel/temple_latlng_viewmodel.dart';
+import '../state/polyline_param_state.dart';
+
+import 'photo_gallery_screen.dart';
 
 class TempleDetailDisplayScreen extends ConsumerWidget {
   final Temple temple;
@@ -70,7 +72,10 @@ class TempleDetailDisplayScreen extends ConsumerWidget {
                 onTap: () {
                   Navigator.pop(context);
                 },
-                child: const Icon(Icons.close),
+                child: const Icon(
+                  Icons.close,
+                  color: Colors.red,
+                ),
               ),
             ],
           ),
@@ -78,12 +83,15 @@ class TempleDetailDisplayScreen extends ConsumerWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(temple.temple),
+              Text(
+                temple.temple,
+                style: const TextStyle(fontSize: 24),
+              ),
               Text(temple.gohonzon),
               if (temple.memo != '')
                 Text(
                   'with.${temple.memo}',
-                  style: TextStyle(color: Colors.grey),
+                  style: const TextStyle(color: Colors.grey),
                 ),
             ],
           ),
@@ -96,7 +104,9 @@ class TempleDetailDisplayScreen extends ConsumerWidget {
 
           //------------------------------// Map
           SizedBox(
-            height: (appValueState.isLargeMap) ? (size.height - 350) : 220,
+            height: (appValueState.isLargeMap)
+                ? (size.height - 350)
+                : (size.height - 600),
             child: GoogleMap(
               mapType: (appValueState.isDefaultmap)
                   ? MapType.satellite
@@ -126,7 +136,19 @@ class TempleDetailDisplayScreen extends ConsumerWidget {
             children: [
               Text(temple.address),
               Text(temple.station),
-              Text((polylineState.distance != '') ? dist.join() : '-'),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text((polylineState.distance != '') ? dist.join() : '-'),
+                  GestureDetector(
+                    onTap: () {
+                      _ref.watch(appValueProvider.notifier).setZenpukuji(
+                          value: (appValueState.isZenpukuji) ? false : true);
+                    },
+                    child: const Icon(Icons.home_filled, color: Colors.red),
+                  ),
+                ],
+              ),
             ],
           ),
 
@@ -137,6 +159,63 @@ class TempleDetailDisplayScreen extends ConsumerWidget {
           ),
 
           makeButtonLine(),
+
+          /////////////////////////// photo
+          (appValueState.isLargeMap)
+              ? Container()
+              : Column(
+                  children: [
+                    Container(
+                      height: 100,
+                      margin: const EdgeInsets.only(top: 20),
+                      child: ListView.separated(
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder: (context, index) {
+                          return Container(
+                            margin: const EdgeInsets.only(right: 10),
+                            width: 70,
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                image: NetworkImage(temple.photo[index]),
+                                fit: BoxFit.fill,
+                              ),
+                            ),
+                          );
+                        },
+                        separatorBuilder: (context, index) =>
+                            const SizedBox(height: 0.2),
+                        itemCount: temple.photo.length,
+                      ),
+                    ),
+                    Container(
+                      padding: const EdgeInsets.only(top: 20, right: 10),
+                      alignment: Alignment.topRight,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  PhotoGalleryScreen(temple: temple),
+                            ),
+                          );
+                        },
+                        style: ElevatedButton.styleFrom(
+                          primary: Colors.red[900],
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                        ),
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 30),
+                          child: const Text('Gallery'),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+
+          /////////////////////////// photo
         ],
       ),
     );
@@ -146,8 +225,24 @@ class TempleDetailDisplayScreen extends ConsumerWidget {
   Widget makeButtonLine() {
     final appValueState = _ref.watch(appValueProvider);
 
+    final polylineState = _ref.watch(polylineProvider(
+      PolylineParamState(
+        origin: (appValueState.isZenpukuji) ? zenpukuji : funabashi,
+        destination: '${temple.lat},${temple.lng}',
+        apikey: 'AIzaSyD9PkTM1Pur3YzmO-v4VzS0r8ZZ0jRJTIU',
+      ),
+    ));
+
     return Row(
       children: [
+        IconButton(
+          onPressed: () {
+            googleMapController.animateCamera(
+              CameraUpdate.newLatLngBounds(polylineState.bounds, 50),
+            );
+          },
+          icon: const Icon(Icons.vignette_rounded, color: Colors.red),
+        ),
         IconButton(
           onPressed: () {
             _ref
@@ -176,13 +271,6 @@ class TempleDetailDisplayScreen extends ConsumerWidget {
         IconButton(
           onPressed: () => backFlagPosition(),
           icon: const Icon(Icons.flag, color: Colors.red),
-        ),
-        IconButton(
-          onPressed: () {
-            _ref.watch(appValueProvider.notifier).setZenpukuji(
-                value: (appValueState.isZenpukuji) ? false : true);
-          },
-          icon: const Icon(Icons.home_filled, color: Colors.red),
         ),
       ],
     );

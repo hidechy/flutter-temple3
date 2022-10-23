@@ -30,9 +30,11 @@ class DefaultLayout extends StatelessWidget {
         fit: StackFit.expand,
         children: [
           _utility.getBackGround(),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: widget,
+          SingleChildScrollView(
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: widget,
+            ),
           ),
         ],
       ),

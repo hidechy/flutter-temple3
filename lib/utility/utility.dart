@@ -67,10 +67,10 @@ class Utility {
   }
 
   ///
-  String makePhotoTime({required String file, required String date}) {
+  String makePhotoTime({required String value}) {
     var time = '';
 
-    final exFilePath = file.split('/');
+    final exFilePath = value.split('/');
     final fileName = exFilePath[exFilePath.length - 1];
     final exFileName = fileName.split('.');
     final exDateTime = exFileName[0].split('_');

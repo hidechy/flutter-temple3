@@ -70,14 +70,19 @@ class TempleSearchScreen extends ConsumerWidget {
                   Expanded(
                     child: TextField(
                       decoration: InputDecoration(
-                        fillColor: Colors.grey.withOpacity(0.3),
-                        filled: true,
-                        border: const OutlineInputBorder(),
-                        contentPadding: const EdgeInsets.symmetric(
-                          vertical: 4,
-                          horizontal: 4,
-                        ),
-                      ),
+                          fillColor: Colors.grey.withOpacity(0.3),
+                          filled: true,
+                          border: const OutlineInputBorder(),
+                          contentPadding: const EdgeInsets.symmetric(
+                            vertical: 4,
+                            horizontal: 4,
+                          ),
+                          prefixIcon: GestureDetector(
+                            onTap: () {
+                              searchTempleController.text = '';
+                            },
+                            child: const Icon(Icons.change_circle_outlined),
+                          )),
                       controller: searchTempleController,
                     ),
                   ),

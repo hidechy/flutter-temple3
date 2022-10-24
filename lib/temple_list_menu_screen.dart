@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:temple/screens/temple_search_screen.dart';
 import 'package:temple/temple_list_screen.dart';
 
 import 'utility/utility.dart';
@@ -34,6 +35,29 @@ class TempleListMenuScreen extends ConsumerWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const SizedBox(height: 50),
+            Container(
+              padding: const EdgeInsets.only(top: 20, right: 10),
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => TempleSearchScreen(year: year),
+                    ),
+                  );
+                },
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.red[900],
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                ),
+                child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 30),
+                  child: const Text('Search'),
+                ),
+              ),
+            ),
             Expanded(
               child: makeYearList(data: yearListState),
             ),

@@ -110,3 +110,51 @@ class YearListNotifier extends StateNotifier<Map<String, int>> {
 }
 
 //////////////////////////////////////////////////////
+
+//////////////////////////////////////////////////////
+
+final dateListProvider =
+    StateNotifierProvider.autoDispose<DateListNotifier, Map<String, Temple>>(
+        (ref) {
+  final client = ref.read(httpClientProvider);
+
+  return DateListNotifier({}, client)..getDateList();
+});
+
+class DateListNotifier extends StateNotifier<Map<String, Temple>> {
+  DateListNotifier(super.state, this.client);
+
+  final HttpClient client;
+
+  Future<void> getDateList() async {
+    await client.post(path: 'getAllTemple').then((value) {
+      final map = <String, Temple>{};
+      for (var i = 0; i < int.parse(value['list'].length.toString()); i++) {
+        final oneData = value['list'][i];
+
+        final list2 = <String>[];
+        for (var j = 0;
+            j < int.parse(oneData['photo'].length.toString());
+            j++) {
+          list2.add(oneData['photo'][j].toString());
+        }
+
+        map[oneData['date']] = Temple(
+          date: DateTime.parse(oneData['date'].toString()),
+          temple: oneData['temple'].toString(),
+          address: oneData['address'].toString(),
+          station: oneData['station'].toString(),
+          memo: oneData['memo'].toString(),
+          gohonzon: oneData['gohonzon'].toString(),
+          thumbnail: oneData['thumbnail'].toString(),
+          lat: oneData['lat'].toString(),
+          lng: oneData['lng'].toString(),
+          photo: list2,
+        );
+      }
+      state = map;
+    });
+  }
+}
+
+//////////////////////////////////////////////////////

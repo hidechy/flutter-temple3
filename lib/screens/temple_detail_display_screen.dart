@@ -282,6 +282,8 @@ class TempleDetailDisplayScreen extends ConsumerWidget {
 
     final appValueState = _ref.watch(appValueProvider);
 
+    //
+
     final exOrigin = (appValueState.isZenpukuji)
         ? zenpukuji.split(',')
         : funabashi.split(',');
@@ -294,6 +296,8 @@ class TempleDetailDisplayScreen extends ConsumerWidget {
       ),
     );
 
+    //
+
     latLng = LatLng(double.parse(temple.lat), double.parse(temple.lng));
 
     markers.add(
@@ -304,6 +308,8 @@ class TempleDetailDisplayScreen extends ConsumerWidget {
         infoWindow: InfoWindow(title: temple.temple, snippet: temple.address),
       ),
     );
+
+    //
 
     if (temple.memo != '') {
       final exMemo = temple.memo.split('、');
@@ -330,7 +336,7 @@ class TempleDetailDisplayScreen extends ConsumerWidget {
       }
     }
 
-    ///
+    //
     initialCameraPosition = CameraPosition(target: latLng, zoom: 15, tilt: 50);
   }
 

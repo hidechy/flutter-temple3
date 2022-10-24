@@ -108,6 +108,7 @@ class TempleListContentsScreen extends ConsumerWidget {
                               if (templeAllState.record[index].memo != '')
                                 Text(
                                   'with.${templeAllState.record[index].memo}',
+                                  style: const TextStyle(color: Colors.grey),
                                 )
                             ],
                           ),

@@ -1,4 +1,4 @@
-// ignore_for_file: must_be_immutable, unused_field
+// ignore_for_file: must_be_immutable, unused_field, avoid_bool_literals_in_conditional_expressions
 
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -6,17 +6,16 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../layouts/default_layout.dart';
 import '../models/temple.dart';
+import '../state/polyline_param_state.dart';
 import '../viewmodel/app_value_viewmodel.dart';
 import '../viewmodel/polyline_viewmodel.dart';
 import '../viewmodel/temple_latlng_viewmodel.dart';
-import '../state/polyline_param_state.dart';
-
 import 'photo_gallery_screen.dart';
 
 class TempleDetailDisplayScreen extends ConsumerWidget {
-  final Temple temple;
+  TempleDetailDisplayScreen({super.key, required this.temple});
 
-  TempleDetailDisplayScreen({Key? key, required this.temple}) : super(key: key);
+  final Temple temple;
 
   late CameraPosition initialCameraPosition;
 
@@ -46,7 +45,7 @@ class TempleDetailDisplayScreen extends ConsumerWidget {
       ),
     ));
 
-    var dist = [polylineState.distance];
+    final dist = [polylineState.distance];
     (appValueState.isZenpukuji)
         ? dist.add('（from 善福寺）')
         : dist.add('（from 船橋）');
@@ -55,7 +54,7 @@ class TempleDetailDisplayScreen extends ConsumerWidget {
 
     setMapParam();
 
-    Size size = MediaQuery.of(context).size;
+    final size = MediaQuery.of(context).size;
 
     return DefaultLayout(
       title: '',
@@ -269,7 +268,7 @@ class TempleDetailDisplayScreen extends ConsumerWidget {
           icon: const Icon(Icons.stacked_line_chart, color: Colors.red),
         ),
         IconButton(
-          onPressed: () => backFlagPosition(),
+          onPressed: backFlagPosition,
           icon: const Icon(Icons.flag, color: Colors.red),
         ),
       ],

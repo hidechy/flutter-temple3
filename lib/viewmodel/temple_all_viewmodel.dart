@@ -139,7 +139,7 @@ class DateListNotifier extends StateNotifier<Map<String, Temple>> {
           list2.add(oneData['photo'][j].toString());
         }
 
-        map[oneData['date']] = Temple(
+        map[oneData['date'].toString()] = Temple(
           date: DateTime.parse(oneData['date'].toString()),
           temple: oneData['temple'].toString(),
           address: oneData['address'].toString(),

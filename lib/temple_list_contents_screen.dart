@@ -5,12 +5,10 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+import 'screens/temple_detail_display_screen.dart';
 import 'utility/utility.dart';
-
 import 'viewmodel/app_value_viewmodel.dart';
 import 'viewmodel/temple_all_viewmodel.dart';
-
-import 'screens/temple_detail_display_screen.dart';
 
 class TempleListContentsScreen extends ConsumerWidget {
   TempleListContentsScreen({super.key, required this.year});

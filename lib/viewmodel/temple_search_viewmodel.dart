@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_dynamic_calls
+
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../data/http/client.dart';
@@ -25,12 +27,12 @@ class TempleSearchNotifier extends StateNotifier<List<Name>> {
   ///
   Future<void> getSearchTemple({required String name}) async {
     await client
-        .post(path: 'getTempleName', body: {"name": name}).then((value) {
-      var list = <Name>[];
+        .post(path: 'getTempleName', body: {'name': name}).then((value) {
+      final list = <Name>[];
       for (var i = 0; i < int.parse(value['list'].length.toString()); i++) {
         final oneData = value['list'][i];
 
-        var list2 = <LatLng>[];
+        final list2 = <LatLng>[];
         for (var j = 0; j < int.parse(oneData['data'].length.toString()); j++) {
           list2.add(
             LatLng(

@@ -1,22 +1,21 @@
-// ignore_for_file: must_be_immutable
+// ignore_for_file: must_be_immutable, cascade_invocations
 
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../layouts/default_layout.dart';
 import '../models/name.dart';
+import '../models/temple.dart';
+import '../temple_list_screen.dart';
 import '../viewmodel/app_value_viewmodel.dart';
 import '../viewmodel/temple_all_viewmodel.dart';
 import '../viewmodel/temple_search_viewmodel.dart';
-import '../temple_list_screen.dart';
-
-import '../models/temple.dart';
 import 'temple_detail_display_screen.dart';
 
 class TempleSearchScreen extends ConsumerWidget {
-  final String year;
+  TempleSearchScreen({super.key, required this.year});
 
-  TempleSearchScreen({Key? key, required this.year}) : super(key: key);
+  final String year;
 
   final TextEditingController searchTempleController = TextEditingController();
 
@@ -30,7 +29,7 @@ class TempleSearchScreen extends ConsumerWidget {
 
     final dateListState = ref.watch(dateListProvider);
 
-    Size size = MediaQuery.of(context).size;
+    final size = MediaQuery.of(context).size;
 
     return DefaultLayout(
       title: '',
@@ -105,11 +104,11 @@ class TempleSearchScreen extends ConsumerWidget {
               ),
               const SizedBox(height: 10),
               SizedBox(
-                height: (size.height / 10 * 8),
+                height: size.height / 10 * 8,
                 child: ListView.separated(
                   padding: EdgeInsets.zero,
                   itemBuilder: (context, index) {
-                    var date =
+                    final date =
                         '${templeSearchState[index].year}-${templeSearchState[index].month}-${templeSearchState[index].day}';
 
                     return Card(
@@ -161,7 +160,7 @@ class TempleSearchScreen extends ConsumerWidget {
 
   ///
   Widget makeTempleName({required Name name}) {
-    var list = <Widget>[];
+    final list = <Widget>[];
 
     list.add(
       Column(
@@ -174,7 +173,7 @@ class TempleSearchScreen extends ConsumerWidget {
     );
 
     if (name.data.length > 1) {
-      var list2 = <String>[];
+      final list2 = <String>[];
 
       for (var i = 1; i < name.data.length; i++) {
         list2.add(name.data[i].temple);

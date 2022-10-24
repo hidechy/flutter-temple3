@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_dynamic_calls, avoid_catches_without_on_clauses, only_throw_errors
+
 import 'dart:convert';
 
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
@@ -16,8 +18,8 @@ final polylineProvider = StateNotifierProvider.family
   return PolylineNotifier(
     PolylineResultState(
       bounds: LatLngBounds(
-        southwest: const LatLng(0.0, 0.0),
-        northeast: const LatLng(0.0, 0.0),
+        southwest: const LatLng(0, 0),
+        northeast: const LatLng(0, 0),
       ),
       distance: '',
       duration: '',
@@ -31,11 +33,21 @@ class PolylineNotifier extends StateNotifier<PolylineResultState> {
 
   Future<void> getPolyline({required PolylineParamState param}) async {
     try {
-      String url = 'https://maps.googleapis'
-          '.com/maps/api/directions/json?origin=${param.origin}&destination'
-          '=${param.destination}&mode=walking&language=ja&key=${param.apikey}';
+      final queryParameters = <String, dynamic>{
+        'mode': 'walking',
+        'language': 'ja',
+        'key': param.apikey,
+        'origin': param.origin,
+        'destination': param.destination,
+      };
 
-      final response = await get(Uri.parse(url));
+      final uri = Uri.https(
+        'maps.googleapis.com',
+        'maps/api/directions/json',
+        queryParameters,
+      );
+
+      final response = await get(uri);
 
       if (response.statusCode == 200) {
         final decoded = jsonDecode(response.body);
@@ -54,18 +66,18 @@ class PolylineNotifier extends StateNotifier<PolylineResultState> {
             double.parse(ne['lat'].toString()),
             double.parse(ne['lng'].toString()),
           );
-          LatLngBounds bounds =
+          final bounds =
               LatLngBounds(southwest: southwest, northeast: northeast);
 
-          String distance = '';
-          String duration = '';
+          var distance = '';
+          var duration = '';
           if ((data['legs'] as List).isNotEmpty) {
             final leg = data['legs'][0];
             distance = leg['distance']['text'].toString();
             duration = leg['duration']['text'].toString();
           }
 
-          List<PointLatLng> polylinePoints = PolylinePoints()
+          final polylinePoints = PolylinePoints()
               .decodePolyline(data['overview_polyline']['points'].toString());
 
           state = PolylineResultState(

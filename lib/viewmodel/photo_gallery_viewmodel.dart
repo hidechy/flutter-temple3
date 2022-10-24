@@ -8,7 +8,7 @@ import '../state/photo_gallery_state.dart';
 final photoGalleryProvider = StateNotifierProvider.autoDispose
     .family<PhotoGalleryStateNotifier, PhotoGalleryState, List<String>>(
         (ref, param) {
-  Utility utility = Utility();
+  final utility = Utility();
 
   return PhotoGalleryStateNotifier(
     PhotoGalleryState(
@@ -30,7 +30,7 @@ class PhotoGalleryStateNotifier extends StateNotifier<PhotoGalleryState> {
 
   ///
   Future<void> setPhotoTime({required String value}) async {
-    var photoTime = utility.makePhotoTime(value: value);
+    final photoTime = utility.makePhotoTime(value: value);
 
     state = state.copyWith(photoTime: photoTime);
   }

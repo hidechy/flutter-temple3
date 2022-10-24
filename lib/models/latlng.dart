@@ -6,22 +6,22 @@ class LatLng {
     required this.lng,
   });
 
+  factory LatLng.fromJson(Map<String, dynamic> json) => LatLng(
+        temple: json['temple'].toString(),
+        address: json['address'].toString(),
+        lat: json['lat'].toString(),
+        lng: json['lng'].toString(),
+      );
+
   String temple;
   String address;
   String lat;
   String lng;
 
-  factory LatLng.fromJson(Map<String, dynamic> json) => LatLng(
-        temple: json["temple"],
-        address: json["address"],
-        lat: json["lat"],
-        lng: json["lng"],
-      );
-
   Map<String, dynamic> toJson() => {
-        "temple": temple,
-        "address": address,
-        "lat": lat,
-        "lng": lng,
+        'temple': temple,
+        'address': address,
+        'lat': lat,
+        'lng': lng,
       };
 }

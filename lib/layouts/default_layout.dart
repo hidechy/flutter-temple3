@@ -5,23 +5,22 @@ import 'package:flutter/material.dart';
 import '../utility/utility.dart';
 
 class DefaultLayout extends StatelessWidget {
+  DefaultLayout(
+      {super.key,
+      required this.widget,
+      required this.title,
+      required this.isTitleDisplay});
+
   final String title;
   final Widget widget;
   final bool isTitleDisplay;
-
-  DefaultLayout(
-      {Key? key,
-      required this.widget,
-      required this.title,
-      required this.isTitleDisplay})
-      : super(key: key);
 
   final Utility _utility = Utility();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: (isTitleDisplay)
+      appBar: isTitleDisplay
           ? AppBar(
               title: Text(title),
             )

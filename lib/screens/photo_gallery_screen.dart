@@ -9,9 +9,9 @@ import '../models/temple.dart';
 import '../viewmodel/photo_gallery_viewmodel.dart';
 
 class PhotoGalleryScreen extends ConsumerWidget {
-  final Temple temple;
+  PhotoGalleryScreen({super.key, required this.temple});
 
-  PhotoGalleryScreen({Key? key, required this.temple}) : super(key: key);
+  final Temple temple;
 
   late BuildContext _context;
   late WidgetRef _ref;
@@ -116,7 +116,7 @@ class PhotoGalleryScreen extends ConsumerWidget {
 
     final list = <Widget>[];
 
-    Size size = MediaQuery.of(_context).size;
+    final size = MediaQuery.of(_context).size;
 
     for (var i = 0; i < temple.photo.length; i++) {
       list.add(
@@ -136,7 +136,7 @@ class PhotoGalleryScreen extends ConsumerWidget {
 
     return Column(
       children: [
-        SizedBox(height: (size.height / 10 * 9)),
+        SizedBox(height: size.height / 10 * 9),
         Wrap(children: list),
       ],
     );

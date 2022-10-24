@@ -7,9 +7,9 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../models/latlng.dart';
 
 class SearchListMap extends ConsumerWidget {
-  final List<LatLng> data;
+  SearchListMap({super.key, required this.data});
 
-  SearchListMap({Key? key, required this.data}) : super(key: key);
+  final List<LatLng> data;
 
   late gMap.LatLng latLng;
   late gMap.CameraPosition initialCameraPosition;

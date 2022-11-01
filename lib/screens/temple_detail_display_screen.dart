@@ -200,7 +200,7 @@ class TempleDetailDisplayScreen extends ConsumerWidget {
                           );
                         },
                         style: ElevatedButton.styleFrom(
-                          primary: Colors.red[900],
+                          backgroundColor: Colors.red[900],
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20),
                           ),

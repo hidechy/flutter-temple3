@@ -23,6 +23,7 @@ mixin _$AppValueState {
   bool get isLargeMap => throw _privateConstructorUsedError;
   bool get isZenpukuji => throw _privateConstructorUsedError;
   bool get isMemoDispLineLimit => throw _privateConstructorUsedError;
+  bool get isYearlyMapSizeLimit => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $AppValueStateCopyWith<AppValueState> get copyWith =>
@@ -41,7 +42,8 @@ abstract class $AppValueStateCopyWith<$Res> {
       bool isPolylineDisp,
       bool isLargeMap,
       bool isZenpukuji,
-      bool isMemoDispLineLimit});
+      bool isMemoDispLineLimit,
+      bool isYearlyMapSizeLimit});
 }
 
 /// @nodoc
@@ -63,6 +65,7 @@ class _$AppValueStateCopyWithImpl<$Res, $Val extends AppValueState>
     Object? isLargeMap = null,
     Object? isZenpukuji = null,
     Object? isMemoDispLineLimit = null,
+    Object? isYearlyMapSizeLimit = null,
   }) {
     return _then(_value.copyWith(
       isDrawnOpen: null == isDrawnOpen
@@ -89,6 +92,10 @@ class _$AppValueStateCopyWithImpl<$Res, $Val extends AppValueState>
           ? _value.isMemoDispLineLimit
           : isMemoDispLineLimit // ignore: cast_nullable_to_non_nullable
               as bool,
+      isYearlyMapSizeLimit: null == isYearlyMapSizeLimit
+          ? _value.isYearlyMapSizeLimit
+          : isYearlyMapSizeLimit // ignore: cast_nullable_to_non_nullable
+              as bool,
     ) as $Val);
   }
 }
@@ -107,7 +114,8 @@ abstract class _$$_AppValueStateCopyWith<$Res>
       bool isPolylineDisp,
       bool isLargeMap,
       bool isZenpukuji,
-      bool isMemoDispLineLimit});
+      bool isMemoDispLineLimit,
+      bool isYearlyMapSizeLimit});
 }
 
 /// @nodoc
@@ -127,6 +135,7 @@ class __$$_AppValueStateCopyWithImpl<$Res>
     Object? isLargeMap = null,
     Object? isZenpukuji = null,
     Object? isMemoDispLineLimit = null,
+    Object? isYearlyMapSizeLimit = null,
   }) {
     return _then(_$_AppValueState(
       isDrawnOpen: null == isDrawnOpen
@@ -153,6 +162,10 @@ class __$$_AppValueStateCopyWithImpl<$Res>
           ? _value.isMemoDispLineLimit
           : isMemoDispLineLimit // ignore: cast_nullable_to_non_nullable
               as bool,
+      isYearlyMapSizeLimit: null == isYearlyMapSizeLimit
+          ? _value.isYearlyMapSizeLimit
+          : isYearlyMapSizeLimit // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -166,7 +179,8 @@ class _$_AppValueState implements _AppValueState {
       required this.isPolylineDisp,
       required this.isLargeMap,
       required this.isZenpukuji,
-      required this.isMemoDispLineLimit});
+      required this.isMemoDispLineLimit,
+      required this.isYearlyMapSizeLimit});
 
 //
   @override
@@ -182,10 +196,12 @@ class _$_AppValueState implements _AppValueState {
   final bool isZenpukuji;
   @override
   final bool isMemoDispLineLimit;
+  @override
+  final bool isYearlyMapSizeLimit;
 
   @override
   String toString() {
-    return 'AppValueState(isDrawnOpen: $isDrawnOpen, isDefaultmap: $isDefaultmap, isPolylineDisp: $isPolylineDisp, isLargeMap: $isLargeMap, isZenpukuji: $isZenpukuji, isMemoDispLineLimit: $isMemoDispLineLimit)';
+    return 'AppValueState(isDrawnOpen: $isDrawnOpen, isDefaultmap: $isDefaultmap, isPolylineDisp: $isPolylineDisp, isLargeMap: $isLargeMap, isZenpukuji: $isZenpukuji, isMemoDispLineLimit: $isMemoDispLineLimit, isYearlyMapSizeLimit: $isYearlyMapSizeLimit)';
   }
 
   @override
@@ -204,12 +220,21 @@ class _$_AppValueState implements _AppValueState {
             (identical(other.isZenpukuji, isZenpukuji) ||
                 other.isZenpukuji == isZenpukuji) &&
             (identical(other.isMemoDispLineLimit, isMemoDispLineLimit) ||
-                other.isMemoDispLineLimit == isMemoDispLineLimit));
+                other.isMemoDispLineLimit == isMemoDispLineLimit) &&
+            (identical(other.isYearlyMapSizeLimit, isYearlyMapSizeLimit) ||
+                other.isYearlyMapSizeLimit == isYearlyMapSizeLimit));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, isDrawnOpen, isDefaultmap,
-      isPolylineDisp, isLargeMap, isZenpukuji, isMemoDispLineLimit);
+  int get hashCode => Object.hash(
+      runtimeType,
+      isDrawnOpen,
+      isDefaultmap,
+      isPolylineDisp,
+      isLargeMap,
+      isZenpukuji,
+      isMemoDispLineLimit,
+      isYearlyMapSizeLimit);
 
   @JsonKey(ignore: true)
   @override
@@ -225,7 +250,8 @@ abstract class _AppValueState implements AppValueState {
       required final bool isPolylineDisp,
       required final bool isLargeMap,
       required final bool isZenpukuji,
-      required final bool isMemoDispLineLimit}) = _$_AppValueState;
+      required final bool isMemoDispLineLimit,
+      required final bool isYearlyMapSizeLimit}) = _$_AppValueState;
 
   @override //
   bool get isDrawnOpen;
@@ -239,6 +265,8 @@ abstract class _AppValueState implements AppValueState {
   bool get isZenpukuji;
   @override
   bool get isMemoDispLineLimit;
+  @override
+  bool get isYearlyMapSizeLimit;
   @override
   @JsonKey(ignore: true)
   _$$_AppValueStateCopyWith<_$_AppValueState> get copyWith =>

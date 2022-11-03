@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import 'screens/temple_detail_display_screen.dart';
+import 'screens/yearly_temple_display_screen.dart';
 import 'utility/utility.dart';
 import 'viewmodel/app_value_viewmodel.dart';
 import 'viewmodel/temple_all_viewmodel.dart';
@@ -73,6 +74,19 @@ class TempleListContentsScreen extends ConsumerWidget {
               ),
             ),
           ),
+          actions: [
+            IconButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => YearlyTempleDisplayScreen(year: year),
+                  ),
+                );
+              },
+              icon: const Icon(Icons.map),
+            ),
+          ],
         ),
         body: Stack(
           fit: StackFit.expand,

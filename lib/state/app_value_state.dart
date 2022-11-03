@@ -13,5 +13,7 @@ class AppValueState with _$AppValueState {
     required bool isLargeMap,
     required bool isZenpukuji,
     required bool isMemoDispLineLimit,
+    //
+    required bool isYearlyMapSizeLimit,
   }) = _AppValueState;
 }

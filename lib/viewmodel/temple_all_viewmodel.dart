@@ -158,3 +158,45 @@ class DateListNotifier extends StateNotifier<Map<String, Temple>> {
 }
 
 //////////////////////////////////////////////////////
+
+//////////////////////////////////////////////////////
+
+final yearlyAllTempleProvider = StateNotifierProvider.autoDispose
+    .family<YearlyAllTempleNotifier, List<String>, String>((ref, year) {
+  final client = ref.read(httpClientProvider);
+  return YearlyAllTempleNotifier([], client)..getYearlyAllTemple(year: year);
+});
+
+class YearlyAllTempleNotifier extends StateNotifier<List<String>> {
+  YearlyAllTempleNotifier(super.state, this.client);
+
+  final HttpClient client;
+
+  Future<void> getYearlyAllTemple({required String year}) async {
+    await client.post(path: 'getAllTemple').then((value) {
+      final list = <String>[];
+      for (var i = 0; i < int.parse(value['list'].length.toString()); i++) {
+        final oneData = value['list'][i];
+
+        final exDate = oneData['date'].toString().split('-');
+        if (year == exDate[0]) {
+          if (!list.contains(oneData['temple'].toString())) {
+            list.add(oneData['temple'].toString());
+            if (oneData['memo'] != '') {
+              final exMemo = oneData['memo'].toString().split('、');
+              for (var j = 0; j < exMemo.length; j++) {
+                if (!list.contains(exMemo[j])) {
+                  list.add(exMemo[j]);
+                }
+              }
+            }
+          }
+        }
+      }
+
+      state = list;
+    });
+  }
+}
+
+//////////////////////////////////////////////////////

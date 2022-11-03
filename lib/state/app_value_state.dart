@@ -12,5 +12,6 @@ class AppValueState with _$AppValueState {
     required bool isPolylineDisp,
     required bool isLargeMap,
     required bool isZenpukuji,
+    required bool isMemoDispLineLimit,
   }) = _AppValueState;
 }

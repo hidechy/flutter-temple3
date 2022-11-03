@@ -86,12 +86,41 @@ class TempleDetailDisplayScreen extends ConsumerWidget {
                 temple.temple,
                 style: const TextStyle(fontSize: 24),
               ),
-              Text(temple.gohonzon),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(temple.gohonzon),
+                  (temple.memo != '')
+                      ? GestureDetector(
+                          onTap: () {
+                            ref
+                                .watch(appValueProvider.notifier)
+                                .setMemoDispLineLimit(
+                                    value: (appValueState.isMemoDispLineLimit)
+                                        ? false
+                                        : true);
+                          },
+                          child: Icon(
+                            (appValueState.isMemoDispLineLimit)
+                                ? Icons.arrow_circle_down
+                                : Icons.arrow_circle_up,
+                          ),
+                        )
+                      : Container(),
+                ],
+              ),
               if (temple.memo != '')
-                Text(
-                  'with.${temple.memo}',
-                  style: const TextStyle(color: Colors.grey),
-                ),
+                (appValueState.isMemoDispLineLimit)
+                    ? Text(
+                        'with.${temple.memo}',
+                        style: const TextStyle(color: Colors.grey),
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                      )
+                    : Text(
+                        'with.${temple.memo}',
+                        style: const TextStyle(color: Colors.grey),
+                      ),
             ],
           ),
 

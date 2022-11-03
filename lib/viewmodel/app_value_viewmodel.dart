@@ -14,6 +14,7 @@ final appValueProvider =
       isPolylineDisp: false,
       isLargeMap: false,
       isZenpukuji: false,
+      isMemoDispLineLimit: true,
     ),
   );
 });
@@ -39,6 +40,10 @@ class AppValueStateNotifier extends StateNotifier<AppValueState> {
 
   Future<void> setZenpukuji({required bool value}) async {
     state = state.copyWith(isZenpukuji: value);
+  }
+
+  Future<void> setMemoDispLineLimit({required bool value}) async {
+    state = state.copyWith(isMemoDispLineLimit: value);
   }
 }
 

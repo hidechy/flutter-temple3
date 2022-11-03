@@ -22,6 +22,7 @@ mixin _$AppValueState {
   bool get isPolylineDisp => throw _privateConstructorUsedError;
   bool get isLargeMap => throw _privateConstructorUsedError;
   bool get isZenpukuji => throw _privateConstructorUsedError;
+  bool get isMemoDispLineLimit => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $AppValueStateCopyWith<AppValueState> get copyWith =>
@@ -39,7 +40,8 @@ abstract class $AppValueStateCopyWith<$Res> {
       bool isDefaultmap,
       bool isPolylineDisp,
       bool isLargeMap,
-      bool isZenpukuji});
+      bool isZenpukuji,
+      bool isMemoDispLineLimit});
 }
 
 /// @nodoc
@@ -60,6 +62,7 @@ class _$AppValueStateCopyWithImpl<$Res, $Val extends AppValueState>
     Object? isPolylineDisp = null,
     Object? isLargeMap = null,
     Object? isZenpukuji = null,
+    Object? isMemoDispLineLimit = null,
   }) {
     return _then(_value.copyWith(
       isDrawnOpen: null == isDrawnOpen
@@ -82,6 +85,10 @@ class _$AppValueStateCopyWithImpl<$Res, $Val extends AppValueState>
           ? _value.isZenpukuji
           : isZenpukuji // ignore: cast_nullable_to_non_nullable
               as bool,
+      isMemoDispLineLimit: null == isMemoDispLineLimit
+          ? _value.isMemoDispLineLimit
+          : isMemoDispLineLimit // ignore: cast_nullable_to_non_nullable
+              as bool,
     ) as $Val);
   }
 }
@@ -99,7 +106,8 @@ abstract class _$$_AppValueStateCopyWith<$Res>
       bool isDefaultmap,
       bool isPolylineDisp,
       bool isLargeMap,
-      bool isZenpukuji});
+      bool isZenpukuji,
+      bool isMemoDispLineLimit});
 }
 
 /// @nodoc
@@ -118,6 +126,7 @@ class __$$_AppValueStateCopyWithImpl<$Res>
     Object? isPolylineDisp = null,
     Object? isLargeMap = null,
     Object? isZenpukuji = null,
+    Object? isMemoDispLineLimit = null,
   }) {
     return _then(_$_AppValueState(
       isDrawnOpen: null == isDrawnOpen
@@ -140,6 +149,10 @@ class __$$_AppValueStateCopyWithImpl<$Res>
           ? _value.isZenpukuji
           : isZenpukuji // ignore: cast_nullable_to_non_nullable
               as bool,
+      isMemoDispLineLimit: null == isMemoDispLineLimit
+          ? _value.isMemoDispLineLimit
+          : isMemoDispLineLimit // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -152,7 +165,8 @@ class _$_AppValueState implements _AppValueState {
       required this.isDefaultmap,
       required this.isPolylineDisp,
       required this.isLargeMap,
-      required this.isZenpukuji});
+      required this.isZenpukuji,
+      required this.isMemoDispLineLimit});
 
 //
   @override
@@ -166,10 +180,12 @@ class _$_AppValueState implements _AppValueState {
   final bool isLargeMap;
   @override
   final bool isZenpukuji;
+  @override
+  final bool isMemoDispLineLimit;
 
   @override
   String toString() {
-    return 'AppValueState(isDrawnOpen: $isDrawnOpen, isDefaultmap: $isDefaultmap, isPolylineDisp: $isPolylineDisp, isLargeMap: $isLargeMap, isZenpukuji: $isZenpukuji)';
+    return 'AppValueState(isDrawnOpen: $isDrawnOpen, isDefaultmap: $isDefaultmap, isPolylineDisp: $isPolylineDisp, isLargeMap: $isLargeMap, isZenpukuji: $isZenpukuji, isMemoDispLineLimit: $isMemoDispLineLimit)';
   }
 
   @override
@@ -186,12 +202,14 @@ class _$_AppValueState implements _AppValueState {
             (identical(other.isLargeMap, isLargeMap) ||
                 other.isLargeMap == isLargeMap) &&
             (identical(other.isZenpukuji, isZenpukuji) ||
-                other.isZenpukuji == isZenpukuji));
+                other.isZenpukuji == isZenpukuji) &&
+            (identical(other.isMemoDispLineLimit, isMemoDispLineLimit) ||
+                other.isMemoDispLineLimit == isMemoDispLineLimit));
   }
 
   @override
   int get hashCode => Object.hash(runtimeType, isDrawnOpen, isDefaultmap,
-      isPolylineDisp, isLargeMap, isZenpukuji);
+      isPolylineDisp, isLargeMap, isZenpukuji, isMemoDispLineLimit);
 
   @JsonKey(ignore: true)
   @override
@@ -206,7 +224,8 @@ abstract class _AppValueState implements AppValueState {
       required final bool isDefaultmap,
       required final bool isPolylineDisp,
       required final bool isLargeMap,
-      required final bool isZenpukuji}) = _$_AppValueState;
+      required final bool isZenpukuji,
+      required final bool isMemoDispLineLimit}) = _$_AppValueState;
 
   @override //
   bool get isDrawnOpen;
@@ -218,6 +237,8 @@ abstract class _AppValueState implements AppValueState {
   bool get isLargeMap;
   @override
   bool get isZenpukuji;
+  @override
+  bool get isMemoDispLineLimit;
   @override
   @JsonKey(ignore: true)
   _$$_AppValueStateCopyWith<_$_AppValueState> get copyWith =>
